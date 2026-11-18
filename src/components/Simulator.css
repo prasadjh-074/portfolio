@@ -1,0 +1,664 @@
+.sim-section {
+  --sim-border: rgba(178, 204, 224, 0.14);
+  --sim-faint: #8d9aab;
+  --sim-signal: #38bdf8;
+  --sim-accent: #10b981;
+  font-family: var(--sans, sans-serif);
+}
+
+.sim-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(230px, 0.55fr);
+  align-items: end;
+  gap: 2rem;
+  margin-bottom: 1.75rem;
+}
+
+.sim-intro > p {
+  max-width: 34ch;
+  margin: 0 0 0.25rem;
+  color: #aeb7c3;
+  font-size: .96rem;
+  line-height: 1.7;
+}
+
+.sim-intro h2 {
+  margin-bottom: 0;
+}
+
+.sim-heading-period {
+  color: var(--sim-signal);
+}
+
+.sim-console {
+  overflow: hidden;
+  border: 1px solid var(--sim-border);
+  border-radius: 5px;
+  background: rgba(16, 18, 23, 0.68);
+  backdrop-filter: blur(16px);
+}
+
+.sim-terminal-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3.1rem;
+  padding: 0 1.4rem;
+  border-bottom: 1px solid var(--sim-border);
+  background: #11161d;
+  font: 500 .79rem var(--mono, monospace);
+}
+
+.sim-terminal-title > span {
+  display: inline-flex;
+  align-items: center;
+  gap: .65rem;
+}
+
+.sim-terminal-title svg {
+  color: var(--sim-signal);
+}
+
+.sim-terminal-status {
+  color: #a2b0be;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  font-size: .65rem;
+}
+
+.sim-terminal-status i {
+  width: .375rem;
+  height: .375rem;
+  border-radius: 50%;
+  background: var(--sim-accent);
+  box-shadow: 0 0 9px rgba(16, 185, 129, .65);
+}
+
+.sim-terminal-body {
+  padding: 1.4rem;
+}
+
+.sim-prompt-label {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  margin-bottom: .7rem;
+  color: #dbe3eb;
+  font: 500 .8rem var(--mono, monospace);
+}
+
+.sim-prompt-label svg {
+  color: #65dcf9;
+}
+
+.sim-terminal-body textarea {
+  display: block;
+  width: 100%;
+  min-height: 4.25rem;
+  padding: .85rem 1rem;
+  border: 1px solid var(--sim-border);
+  border-radius: 3px;
+  background: #080b10;
+  color: #f3f4f6;
+  resize: vertical;
+  font: 400 .82rem/1.6 var(--mono, monospace);
+}
+
+.sim-terminal-body textarea::placeholder {
+  color: var(--sim-faint);
+}
+
+.sim-terminal-body textarea[aria-invalid='true'] {
+  border-color: #f48da0;
+}
+
+.sim-terminal-body :is(textarea, button, input):focus-visible,
+.sim-output-info a:focus-visible,
+.sim-percentile:focus-visible {
+  outline: 2px solid #63dcfb;
+  outline-offset: 3px;
+}
+
+.sim-error {
+  margin: .5rem 0 0;
+  color: #fda4af;
+  font-size: .82rem;
+}
+
+.sim-presets {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin-top: .9rem;
+}
+
+.sim-control-label {
+  display: inline-block;
+  margin-right: .45rem;
+  color: var(--sim-faint);
+  font: 500 .65rem var(--mono, monospace);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+.sim-preset {
+  padding: .52rem .72rem;
+  border: 1px solid var(--sim-border);
+  border-radius: 3px;
+  background: #11151b;
+  color: #c5cfdd;
+  cursor: pointer;
+  font: 500 .72rem var(--mono, monospace);
+  transition: border-color .2s, background .2s, color .2s;
+}
+
+.sim-preset:hover,
+.sim-preset[aria-pressed='true'] {
+  border-color: rgba(56, 189, 248, .42);
+  background: rgba(56, 189, 248, .09);
+  color: #a1e8ff;
+}
+
+.sim-actions,
+.sim-stress,
+.sim-run {
+  display: flex;
+  align-items: center;
+}
+
+.sim-actions {
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.15rem;
+}
+
+.sim-stress {
+  gap: .5rem;
+}
+
+.sim-stress input {
+  width: clamp(5rem, 11vw, 9.375rem);
+  min-height: 2rem;
+  margin: 0;
+  accent-color: #67d9f9;
+  cursor: pointer;
+}
+
+.sim-stress output {
+  width: 2.1rem;
+  color: #b3eeff;
+  text-align: right;
+  font: 500 .72rem var(--mono, monospace);
+  font-variant-numeric: tabular-nums;
+}
+
+.sim-run {
+  gap: .85rem;
+}
+
+.sim-shortcut {
+  color: var(--sim-faint);
+  font: 500 .64rem var(--mono, monospace);
+}
+
+.sim-shortcut kbd {
+  padding: .19rem .31rem;
+  border: 1px solid var(--sim-border);
+  border-radius: 3px;
+  background: #080b10;
+  color: #c3cedb;
+  font: inherit;
+  white-space: nowrap;
+}
+
+.sim-run-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .55rem;
+  min-height: 2.65rem;
+  padding: .65rem 1rem;
+  border: 1px solid #8ae4fc;
+  border-radius: 3px;
+  background: #9ce8ff;
+  color: #081218;
+  cursor: pointer;
+  font: 700 .73rem var(--mono, monospace);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  transition: background .2s, transform .2s, box-shadow .2s;
+}
+
+.sim-run-button:hover {
+  transform: translateY(-1px);
+  background: #c0f1ff;
+  box-shadow: 0 0 18px rgba(56, 189, 248, .22);
+}
+
+.sim-output-info {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .55rem 1.25rem;
+  align-items: center;
+  min-height: 3.4rem;
+  padding: .7rem 1.4rem;
+  border-block: 1px solid var(--sim-border);
+  background: rgba(8, 12, 16, .65);
+  color: #a7b3c1;
+  font: 400 .71rem/1.45 var(--mono, monospace);
+}
+
+.sim-output-info > div {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .43rem .65rem;
+}
+
+.sim-output-info strong {
+  color: #dfe9f2;
+  font-weight: 600;
+}
+
+.sim-output-info > div svg {
+  color: #53d7a7;
+}
+
+.sim-output-info a {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  color: #9ad7c3;
+  text-decoration: none;
+  transition: color .2s;
+}
+
+.sim-output-info a svg {
+  transition: transform .2s;
+}
+
+.sim-output-info a:hover {
+  color: #baf8df;
+}
+
+.sim-output-info a:hover svg {
+  transform: translate(2px, -2px);
+}
+
+.sim-results {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+}
+
+.sim-result-panel {
+  min-width: 0;
+  padding: 1.15rem 1.4rem 1rem;
+}
+
+.sim-result-panel + .sim-result-panel {
+  border-left: 1px solid var(--sim-border);
+}
+
+.sim-result-header,
+.sim-topology-legend {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .5rem 1rem;
+}
+
+.sim-result-header h3 {
+  margin: 0;
+  color: #f0f4f8;
+  font-size: .95rem;
+  font-weight: 600;
+}
+
+.sim-result-header > span {
+  color: var(--sim-faint);
+  font: 400 .63rem var(--mono, monospace);
+  letter-spacing: .09em;
+}
+
+.sim-topology-body {
+  display: grid;
+  align-content: space-between;
+  height: calc(100% - 1.15rem);
+}
+
+.sim-topology {
+  display: block;
+  width: 100%;
+  margin: .1rem auto 0;
+  max-width: 39rem;
+  font-family: var(--mono, monospace);
+}
+
+.sim-node-kind {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.05px;
+}
+
+.sim-node-label {
+  font-size: 11.3px;
+  font-weight: 500;
+}
+
+.sim-topology-legend {
+  justify-content: flex-start;
+  padding: .4rem 0 .15rem;
+  margin-top: auto;
+  color: #a7b3c1;
+  font: 400 .63rem var(--mono, monospace);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.sim-topology-legend span,
+.sim-plot-legend span {
+  display: inline-flex;
+  gap: .36rem;
+  align-items: center;
+}
+
+.sim-topology-legend i,
+.sim-plot-legend i {
+  width: .36rem;
+  height: .36rem;
+  border-radius: 50%;
+}
+
+.sim-flow-path,
+.sim-feedback-path {
+  stroke-dasharray: 4 3;
+  animation: sim-current 1.65s linear infinite;
+}
+
+.sim-feedback-path {
+  opacity: .75;
+  animation-duration: 3s;
+}
+
+@keyframes sim-current {
+  to { stroke-dashoffset: -14; }
+}
+
+.sim-topology-mobile {
+  display: none;
+}
+
+.sim-distribution {
+  margin-top: 1rem;
+  font-family: var(--mono, monospace);
+}
+
+.sim-plot-legend {
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+  justify-content: end;
+  margin-bottom: .6rem;
+  color: #a7b3c1;
+  font-size: .64rem;
+}
+
+.sim-plot-legend span:first-child i {
+  background: #3dcaa1;
+}
+
+.sim-plot-legend span:last-child i {
+  background: #fb7891;
+}
+
+.sim-percentiles {
+  display: grid;
+  gap: .3rem;
+}
+
+.sim-percentile {
+  display: grid;
+  grid-template-columns: 2.35rem minmax(0, 1fr) 6.8rem;
+  align-items: center;
+  gap: .55rem;
+  width: 100%;
+  min-height: 2.88rem;
+  padding: .38rem .55rem;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: transparent;
+  color: #e2e9f0;
+  cursor: pointer;
+  font: 500 .72rem var(--mono, monospace);
+  text-align: left;
+  transition: border-color .2s, background .2s;
+}
+
+.sim-percentile:hover,
+.sim-percentile[aria-pressed='true'] {
+  border-color: color-mix(in srgb, var(--percentile-color), transparent 73%);
+  background: color-mix(in srgb, var(--percentile-color), transparent 94%);
+}
+
+.sim-percentile-label {
+  color: var(--percentile-color);
+  font-weight: 700;
+}
+
+.sim-percentile-bars {
+  display: grid;
+  gap: .24rem;
+}
+
+.sim-bar-track {
+  display: block;
+  overflow: hidden;
+  height: .29rem;
+  border-radius: 2px;
+  background: #212933;
+}
+
+.sim-bar {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.sim-bar-rate {
+  background: linear-gradient(90deg, #147a6b, #3dcaa1);
+}
+
+.sim-bar-latency {
+  background: linear-gradient(90deg, #a34466, #fb7891);
+}
+
+.sim-percentile-values {
+  display: grid;
+  justify-items: end;
+  gap: .12rem;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.sim-percentile-values small {
+  color: var(--sim-faint);
+  font-size: .6rem;
+}
+
+.sim-percentile-caption {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: .35rem .55rem;
+  margin-top: .65rem;
+  border-top: 1px solid var(--sim-border);
+  padding: .7rem .15rem 0;
+  color: #dde6ee;
+  font-size: .71rem;
+}
+
+.sim-percentile-caption strong {
+  font-weight: 600;
+}
+
+.sim-percentile-caption small {
+  color: var(--sim-faint);
+  font-size: .65rem;
+}
+
+.sim-output-note {
+  margin: 0;
+  padding: .65rem 1.4rem;
+  border-top: 1px solid var(--sim-border);
+  color: #a7b3c1;
+  font-size: .76rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 900px) {
+  .sim-result-panel {
+    padding-inline: 1rem;
+  }
+}
+
+@media (max-width: 750px) {
+  .sim-intro {
+    grid-template-columns: 1fr;
+    gap: .75rem;
+  }
+
+  .sim-intro > p {
+    max-width: 52ch;
+  }
+
+  .sim-results {
+    grid-template-columns: 1fr;
+  }
+
+  .sim-result-panel + .sim-result-panel {
+    border-left: 0;
+    border-top: 1px solid var(--sim-border);
+  }
+
+  .sim-topology-body {
+    height: auto;
+  }
+
+  .sim-topology {
+    max-width: 34rem;
+  }
+
+  .sim-topology-legend {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 500px) {
+  .sim-terminal-title,
+  .sim-terminal-body,
+  .sim-output-info,
+  .sim-output-note {
+    padding-inline: 1rem;
+  }
+
+  .sim-terminal-title {
+    font-size: .7rem;
+  }
+
+  .sim-terminal-status {
+    font-size: .56rem;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+
+  .sim-terminal-body textarea {
+    min-height: 6rem;
+  }
+
+  .sim-preset {
+    min-height: 2.75rem;
+  }
+
+  .sim-presets > .sim-control-label {
+    flex-basis: 100%;
+  }
+
+  .sim-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .sim-stress input {
+    flex: 1;
+  }
+
+  .sim-run {
+    justify-content: space-between;
+  }
+
+  .sim-result-header h3 {
+    font-size: .85rem;
+  }
+
+  .sim-topology {
+    display: none;
+  }
+
+  .sim-topology-mobile {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .45rem;
+    padding: .85rem 0;
+    margin: 0;
+    list-style-type: none;
+    font: 500 .72rem/1.5 var(--mono, monospace);
+  }
+
+  .sim-topology-mobile li {
+    border: 1px solid color-mix(in srgb, var(--node-color), transparent 70%);
+    border-radius: 3px;
+    background: #0b1015;
+    padding: .45rem .55rem;
+    color: #dfe8f1;
+  }
+
+  .sim-topology-mobile li:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .sim-topology-mobile li span {
+    display: block;
+    color: var(--node-color);
+    text-transform: uppercase;
+    font-size: .57rem;
+    letter-spacing: .05em;
+  }
+
+  .sim-topology-legend {
+    display: none;
+  }
+
+  .sim-percentile {
+    grid-template-columns: 1.9rem minmax(0, 1fr) 5.6rem;
+    gap: .35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sim-flow-path,
+  .sim-feedback-path {
+    animation: none;
+  }
+
+  .sim-run-button,
+  .sim-output-info a svg,
+  .sim-preset,
+  .sim-percentile {
+    transition: none;
+  }
+}

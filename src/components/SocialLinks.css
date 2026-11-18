@@ -1,0 +1,491 @@
+@property --telemetry-beam-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.social-dock {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.social-card-slot {
+  min-width: 0;
+  container: profile-card / inline-size;
+}
+
+.social-card {
+  --profile-color: #10b981;
+  --profile-rgb: 16, 185, 129;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  position: relative;
+  isolation: isolate;
+  min-height: 110px;
+  height: 100%;
+  padding: 12px 13px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 7px;
+  background:
+    radial-gradient(ellipse at 85% 100%, rgba(var(--profile-rgb), 0.09), transparent 75%),
+    rgba(16, 18, 23, 0.68);
+  backdrop-filter: blur(16px);
+  color: #f3f4f6;
+  text-decoration: none;
+  transition: background-color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.social-card--linkedin,
+.social-quick__link--linkedin {
+  --profile-color: #38bdf8;
+  --profile-rgb: 56, 189, 248;
+}
+
+.social-card--github::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--telemetry-beam-angle),
+    transparent 0 68%,
+    rgba(16, 185, 129, 0.08) 74%,
+    #10b981 92%,
+    #6ee7b7 94%,
+    rgba(16, 185, 129, 0.2) 98%,
+    transparent
+  );
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0.58;
+  animation: social-border-beam 7s linear infinite;
+  content: "";
+  pointer-events: none;
+  transition: opacity 240ms ease;
+}
+
+.social-card[data-engaged="true"] {
+  border-color: rgba(var(--profile-rgb), 0.38);
+  background-color: rgba(16, 18, 23, 0.94);
+  box-shadow: 0 8px 28px -15px rgba(var(--profile-rgb), 0.5);
+}
+
+.social-card--github[data-engaged="true"]::before {
+  opacity: 1;
+}
+
+.social-card:focus-visible,
+.social-quick__link:focus-visible {
+  outline: 2px solid var(--profile-color);
+  outline-offset: 3px;
+}
+
+.social-card__reflection {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  pointer-events: none;
+}
+
+.social-card__reflection::after {
+  position: absolute;
+  inset: -65% -45%;
+  background: linear-gradient(105deg, transparent 38%, rgba(125, 211, 252, 0.18) 50%, transparent 62%);
+  transform: translateX(-55%);
+  content: "";
+}
+
+.social-card--linkedin[data-engaged="true"] .social-card__reflection {
+  opacity: 1;
+}
+
+.social-card--linkedin[data-engaged="true"] .social-card__reflection::after {
+  animation: social-glare-sweep 1.05s ease-out both;
+}
+
+.social-card__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.social-card__mark {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(var(--profile-rgb), 0.23);
+  border-radius: 5px;
+  background: rgba(var(--profile-rgb), 0.085);
+  color: var(--profile-color);
+}
+
+.social-card__name {
+  font: 600 13px/1 var(--sans, system-ui, sans-serif);
+  letter-spacing: -0.015em;
+}
+
+.social-card__arrow {
+  margin-left: auto;
+  color: #929ba8;
+  transition: color 200ms ease, transform 200ms ease;
+}
+
+.social-card[data-engaged="true"] .social-card__arrow {
+  color: var(--profile-color);
+  transform: translate(2px, -2px);
+}
+
+.social-card__status {
+  align-self: end;
+  width: calc(100% - 108px);
+  max-width: 138px;
+  min-height: 19px;
+  padding-top: 8px;
+  color: #aeb7bf;
+  font: 500 9px/1.3 var(--mono, monospace);
+  letter-spacing: 0.015em;
+  overflow-wrap: anywhere;
+}
+
+.social-card[data-engaged="true"] .social-card__status {
+  color: #e0f4fa;
+}
+
+.social-card__art {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  pointer-events: none;
+}
+
+.social-card__art--github {
+  display: flex;
+  height: 44px;
+  align-items: end;
+  gap: 5px;
+}
+
+.social-branch {
+  width: 30px;
+  height: 39px;
+  overflow: visible;
+  transform: translateY(2px);
+}
+
+.social-branch path {
+  stroke: #23c491;
+  stroke-width: 1.15;
+}
+
+.social-branch__main {
+  opacity: 0.54;
+}
+
+.social-branch__fork {
+  stroke-dasharray: 1 3;
+  stroke-linecap: round;
+  opacity: 0.55;
+}
+
+.social-card[data-engaged="true"] .social-branch__fork {
+  stroke-dasharray: none;
+  opacity: 0.92;
+}
+
+.social-branch circle {
+  fill: #31cb96;
+}
+
+.social-branch .social-branch__signal,
+.social-branch .social-branch__merge {
+  fill: #b5f6db;
+  filter: drop-shadow(0 0 3px #31cb96);
+}
+
+.social-branch__merge {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: social-merge 650ms 860ms ease-out both;
+}
+
+.social-heatmap {
+  display: grid;
+  grid-template-columns: repeat(12, 4px);
+  grid-template-rows: repeat(7, 4px);
+  gap: 2px;
+}
+
+.social-heatmap span {
+  --cell-color: #10332b;
+  --cell-signal: #0f795b;
+  display: block;
+  border-radius: 1px;
+  background: var(--cell-color);
+}
+
+.social-heatmap span[data-strength="1"] {
+  --cell-color: #064e3b;
+  --cell-signal: #10b981;
+}
+
+.social-heatmap span[data-strength="2"] {
+  --cell-color: #087454;
+  --cell-signal: #34d399;
+  animation: social-cell-idle 4s var(--cell-idle) ease-in-out infinite;
+}
+
+.social-heatmap span[data-strength="3"] {
+  --cell-color: #11a576;
+  --cell-signal: #6ee7b7;
+  animation: social-cell-idle 4.5s var(--cell-idle) ease-in-out infinite;
+}
+
+.social-card[data-engaged="true"] .social-heatmap span {
+  animation: social-cell-ripple 1.3s var(--cell-wave) ease-out both;
+}
+
+.social-card__art--linkedin {
+  right: 7px;
+  bottom: 4px;
+  width: 121px;
+  height: 54px;
+  overflow: visible;
+}
+
+.social-network__orbit {
+  stroke: rgba(56, 189, 248, 0.34);
+  stroke-width: 0.9;
+  stroke-dasharray: 1 3;
+}
+
+.social-network__edge {
+  stroke: #38bdf8;
+  stroke-width: 0.8;
+  opacity: 0.36;
+}
+
+.social-network__signal {
+  stroke-width: 1.15;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 520ms var(--network-delay) ease;
+}
+
+.social-card[data-engaged="true"] .social-network__signal {
+  stroke-dashoffset: 0;
+}
+
+.social-network__node {
+  fill: #3388a8;
+  transition: fill 220ms var(--network-delay) ease;
+}
+
+.social-card[data-engaged="true"] .social-network__node {
+  fill: #8fe1fc;
+}
+
+.social-network__packet {
+  fill: #b4f0ff;
+  filter: drop-shadow(0 0 2px #38bdf8);
+}
+
+.social-network__label {
+  fill: #7795a4;
+  font: 600 8.2px/1 var(--sans, system-ui, sans-serif);
+  transition: fill 230ms var(--network-delay) ease;
+}
+
+.social-card[data-engaged="true"] .social-network__label {
+  fill: #c3ecfc;
+}
+
+.social-network__radar,
+.social-network__radar-ring {
+  stroke: #38bdf8;
+  stroke-width: 0.85;
+}
+
+.social-network__radar {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: social-radar-ping 3.3s ease-out infinite;
+}
+
+.social-network__hub {
+  fill: #7dd3fc;
+  filter: drop-shadow(0 0 4px #38bdf8);
+}
+
+.social-quick {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.social-quick__link {
+  --profile-color: #10b981;
+  --profile-rgb: 16, 185, 129;
+  display: flex;
+  min-height: 34px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding-inline: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 5px;
+  background: rgba(16, 18, 23, 0.58);
+  color: #b4bdc8;
+  font: 500 10px/1 var(--mono, monospace);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.social-quick__link--linkedin {
+  --profile-color: #38bdf8;
+  --profile-rgb: 56, 189, 248;
+}
+
+.social-quick__link[data-engaged="true"] {
+  border-color: rgba(var(--profile-rgb), 0.48);
+  background: rgba(var(--profile-rgb), 0.09);
+  color: #f3f4f6;
+}
+
+.social-quick__icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: var(--profile-color);
+}
+
+.social-quick__icon::after {
+  position: absolute;
+  inset: -3px;
+  border: 1px solid var(--profile-color);
+  border-radius: 50%;
+  opacity: 0;
+  content: "";
+}
+
+.social-quick__link[data-engaged="true"] .social-quick__icon::after {
+  animation: social-quick-pulse 1.35s ease-out infinite;
+}
+
+.social-quick__arrow {
+  color: #8794a3;
+}
+
+.social-quick--footer .social-quick__link {
+  min-height: 40px;
+  gap: 8px;
+  padding-inline: 10px;
+}
+
+@keyframes social-border-beam {
+  to { --telemetry-beam-angle: 360deg; }
+}
+
+@keyframes social-glare-sweep {
+  to { transform: translateX(61%); }
+}
+
+@keyframes social-cell-idle {
+  0%, 100% { opacity: 0.68; }
+  50% { opacity: 1; }
+}
+
+@keyframes social-cell-ripple {
+  0% { background: var(--cell-color); }
+  30% { background: var(--cell-signal); }
+  100% { background: color-mix(in srgb, var(--cell-color), var(--cell-signal) 24%); }
+}
+
+@keyframes social-radar-ping {
+  0% { opacity: 0.72; transform: scale(0.74); }
+  72%, 100% { opacity: 0; transform: scale(1.75); }
+}
+
+@keyframes social-merge {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(2.8); }
+}
+
+@keyframes social-quick-pulse {
+  0% { opacity: 0.47; transform: scale(0.8); }
+  80%, 100% { opacity: 0; transform: scale(1.5); }
+}
+
+@container profile-card (max-width: 224px) {
+  .social-card {
+    grid-template-rows: auto 34px 1fr;
+    min-height: 121px;
+    padding: 10px;
+  }
+  .social-card__mark { width: 27px; height: 27px; }
+  .social-card__status {
+    grid-row: 3;
+    align-self: start;
+    width: 100%;
+    max-width: none;
+    min-height: 0;
+    padding-top: 3px;
+  }
+  .social-card__art { bottom: auto; }
+  .social-card__art--github { top: 40px; right: 10px; height: 27px; }
+  .social-card__art--linkedin { top: 34px; right: 7px; width: 93px; height: 41px; }
+  .social-branch { width: 24px; height: 30px; }
+  .social-heatmap {
+    grid-template-columns: repeat(12, 3px);
+    grid-template-rows: repeat(7, 3px);
+    gap: 1px;
+  }
+}
+
+@media (max-width: 600px) {
+  .social-dock { gap: 8px; }
+  .social-quick--nav .social-quick__label { display: none; }
+  .social-quick--nav .social-quick__link { min-width: 34px; }
+}
+
+@media (pointer: coarse) {
+  .social-quick__link,
+  .social-quick--footer .social-quick__link {
+    min-height: 44px;
+  }
+  .social-quick--nav .social-quick__link {
+    min-width: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .social-card,
+  .social-card::before,
+  .social-card__arrow,
+  .social-card__reflection,
+  .social-card--linkedin[data-engaged="true"] .social-card__reflection::after,
+  .social-card .social-heatmap span,
+  .social-card[data-engaged="true"] .social-heatmap span,
+  .social-quick__link,
+  .social-quick__link[data-engaged="true"] .social-quick__icon::after,
+  .social-network__label,
+  .social-network__signal,
+  .social-network__node,
+  .social-network__radar {
+    animation: none;
+    transition: none;
+  }
+  .social-card--github::before { --telemetry-beam-angle: 90deg; }
+  .social-card[data-engaged="true"] .social-card__arrow { transform: none; }
+  .social-card[data-engaged="true"] .social-heatmap span { background: var(--cell-signal); }
+}

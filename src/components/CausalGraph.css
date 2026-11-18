@@ -1,0 +1,247 @@
+.causal-graph {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  min-width: 0;
+  min-height: 470px;
+  height: 100%;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 52%, rgb(19 37 48 / 32%), transparent 68%),
+    linear-gradient(140deg, rgb(13 18 24 / 55%), rgb(7 8 10 / 30%));
+}
+
+.causal-graph__header,
+.causal-graph__footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--mono, "JetBrains Mono", monospace);
+}
+
+.causal-graph__header {
+  padding: 21px 25px 0;
+}
+
+.causal-graph__heading,
+.causal-graph__status,
+.causal-graph__footer span,
+.causal-graph__footer button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font: inherit;
+}
+
+.causal-graph__heading,
+.causal-graph__status {
+  font-size: 11px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.causal-graph__heading {
+  color: #aebdc9;
+}
+
+.causal-graph__heading svg {
+  color: #70cce9;
+}
+
+.causal-graph__status {
+  color: #75e4b9;
+}
+
+.causal-graph__status > span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 9px #10b981a0;
+}
+
+.causal-graph__stage {
+  position: relative;
+  min-width: 0;
+  min-height: 340px;
+}
+
+.causal-graph__stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+}
+
+.graph-node {
+  --node-color: #aabecb;
+  --node-rule: #374853;
+  --node-surface: #0d161e;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  align-items: end;
+  justify-items: center;
+  min-width: 46px;
+  min-height: 46px;
+  padding: 0 2px 1px;
+  transform: translate(-50%, -20px);
+  visibility: hidden;
+  color: var(--node-color);
+  text-decoration: none;
+  outline: none;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.graph-node__caption {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 7px;
+  border: 1px solid var(--node-rule);
+  border-radius: 4px;
+  background: var(--node-surface);
+  color: inherit;
+  font-family: var(--mono, "JetBrains Mono", monospace);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease, box-shadow 140ms ease;
+}
+
+.graph-node--identity {
+  --node-color: #c4f4ff;
+  --node-rule: #39697a;
+  --node-surface: #0b2029;
+  min-height: 65px;
+  transform: translate(-50%, -23px);
+  z-index: 1;
+}
+
+.graph-node--identity .graph-node__caption {
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.graph-node--github {
+  --node-color: #a1ebcd;
+  --node-rule: #275847;
+  --node-surface: #0a1b17;
+}
+
+.graph-node--linkedin {
+  --node-color: #a5e5ff;
+  --node-rule: #295368;
+  --node-surface: #0b1c27;
+}
+
+.graph-node--academic {
+  --node-color: #c2c9d9;
+  --node-rule: #414759;
+  --node-surface: #131621;
+}
+
+.graph-node[href] {
+  cursor: pointer;
+}
+
+.graph-node:focus-visible {
+  outline: none;
+}
+
+.causal-graph__stage[data-ready] .graph-node {
+  visibility: visible;
+}
+
+.graph-node:hover .graph-node__caption,
+.graph-node:focus-visible .graph-node__caption {
+  border-color: var(--node-color);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--node-color) 20%, transparent);
+}
+
+.graph-node:focus-visible .graph-node__caption {
+  outline: 2px solid var(--node-color);
+  outline-offset: 3px;
+}
+
+.causal-graph__stage[data-dragging] canvas,
+.causal-graph__stage[data-dragging] .graph-node {
+  cursor: grabbing;
+}
+
+.causal-graph__footer {
+  min-height: 53px;
+  padding: 0 23px 9px 25px;
+  color: #9daab6;
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.causal-graph__footer span {
+  letter-spacing: 0.065em;
+  text-transform: uppercase;
+}
+
+.causal-graph__footer button {
+  min-height: 44px;
+  padding: 0 5px;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.causal-graph__footer button:hover,
+.causal-graph__footer button:focus-visible {
+  color: #bdefff;
+}
+
+.causal-graph__footer button:focus-visible {
+  outline: 1px solid #70cce9;
+  outline-offset: 2px;
+}
+
+@media (max-width: 810px) {
+  .causal-graph {
+    min-height: 432px;
+  }
+}
+
+@media (max-width: 620px) {
+  .causal-graph {
+    min-height: 394px;
+  }
+
+  .causal-graph__stage {
+    min-height: 305px;
+  }
+
+  .causal-graph__header {
+    padding: 19px 16px 0;
+  }
+
+  .causal-graph__footer {
+    padding-right: 14px;
+    padding-left: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .graph-node__caption {
+    transition: none;
+  }
+}
